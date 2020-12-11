@@ -90,6 +90,7 @@ def rect(x: float,
                       lineto(width, 0,  absolute=False),
                       lineto(0, -height,absolute=False),
                       closepath(),
+                      setlinewidth(line_width),
                       stroke(save_context),
                       fill(fill_value)))
 
