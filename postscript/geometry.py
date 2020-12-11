@@ -1,15 +1,6 @@
 import typing as t
-import itertools as it
-import functools as ft
 
-PS_CMD = str
-DEBUG = False
-
-def DEBUG_info(function: t.Callable) -> t.Callable:
-    def wrapper(*args, **kwargs) -> PS_CMD:
-        dbg_info = f'% {function.__name__}({args}, {kwargs})\n\t'
-        return (dbg_info if DEBUG else '') + function(*args, **kwargs)
-    return wrapper
+from .misc import PS_CMD, DEBUG_info
 
 
 def cm_to_units(value: float) -> float:
@@ -18,6 +9,8 @@ def cm_to_units(value: float) -> float:
     PostScript, которые равны 1/72 дюйма
     """
     # В 1 сантиметре 0.394 дюйма
+    if type(value) not in (float, int):
+        return value
     return (value * 0.394) / (1/72)
 
 
@@ -89,15 +82,16 @@ def rect(x: float,
          width: float,
          height: float,
          line_width: float = 0.1,
-         fill: float = 0,
+         fill_value: float = 0,
          absolute: bool = True) -> PS_CMD:
-    save_context = fill != 0
+    save_context = fill_value != 0
     return '\n'.join((moveto(x, y, absolute),
                       lineto(0, height, absolute=False),
                       lineto(width, 0,  absolute=False),
                       lineto(0, -height,absolute=False),
                       closepath(),
-                      stroke(save_context)))
+                      stroke(save_context),
+                      fill(fill_value)))
 
 
 @DEBUG_info
@@ -105,5 +99,6 @@ def square(x: float,
            y: float,
            edge: float,
            line_width: float = 0.1,
+           fill_value: float = 0,
            absolute: bool = True) -> PS_CMD:
-    return rect(x, y, edge, edge, line_width, absolute)
+    return rect(x, y, edge, edge, line_width, fill_value, absolute)
