@@ -19,7 +19,7 @@ def translate(x: float, y: float) -> PS_CMD:
     Перемещает центр координат на заданные координаты.
     Чаще всего требуется вместе с rotate
     """
-    return f'{x} {y} translate'
+    return f'{cm_to_units(x)} {cm_to_units(y)} translate'
 
 
 @DEBUG_info
