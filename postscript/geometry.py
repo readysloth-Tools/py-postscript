@@ -119,16 +119,16 @@ def line(x1: float,
          x2: float,
          y2: float,
          width: float = 0.1,
-         stroke: bool = True,
+         do_stroke: bool = True,
          absolute: bool = True) -> PS_CMD:
     """
     Создает линию на документе
     """
     return '\n'.join(('newpath',
-                    moveto(x1, y1, absolute),
-                    lineto(x2, y2, absolute),
-                    setlinewidth(width),
-                    stroke() if stroke else ''))
+                      moveto(x1, y1, absolute),
+                      lineto(x2, y2, absolute),
+                      setlinewidth(width),
+                      stroke() if do_stroke else ''))
 
 
 @DEBUG_info
