@@ -24,11 +24,17 @@ class Text:
 @DEBUG_info
 def setfont(font_name: str = '/LiberationSerif',
             size: float = 11) -> PS_CMD:
+    """
+    Выставляет шрифт документа
+    """
     return f'{font_name} findfont {size} scalefont setfont'
 
 
 def text(txt: Text,
          absolute: bool = True) -> PS_CMD:
+    """
+    Печатает текст на листе
+    """
     return '\n'.join((setfont(txt.font, txt.size),
                       moveto(txt.x, txt.y, absolute),
                       f'({txt.content})',
@@ -43,6 +49,9 @@ def text_in_cell(x: float,
                  line_width: float = 0.1,
                  fill_value: float = 0,
                  absolute: bool = True) -> PS_CMD:
+    """
+    Печатает текст в прямоугольнике
+    """
     return '\n'.join((rect(x, y, width, heigth,
                            line_width, fill_value, absolute),
                       text(txt, absolute)))
